@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i=0 ; i <m_CatalogMedicinesList.length;i++)
         {
             m_CatalogMedicinesList[i] = new MedicineInfo();
+            m_CatalogMedicinesList[i].Id = i;
             m_CatalogMedicinesList[i].title = "title "+i;
             m_CatalogMedicinesList[i].country_id =r.nextInt(4);
             m_CatalogMedicinesList[i].form = new int[]{1,2};
