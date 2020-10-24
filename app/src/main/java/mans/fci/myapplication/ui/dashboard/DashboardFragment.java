@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,24 +15,43 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import mans.fci.myapplication.MainActivity;
 import mans.fci.myapplication.R;
+import mans.fci.myapplication.ui.FavoritesMedicineListAdapter;
+import mans.fci.myapplication.ui.MedicineHomeCatalogAdapter;
 
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
+    ListView m_MainCatalogListView;
+    public FavoritesMedicineListAdapter m_MedicineAdapter ;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
+        /*dashboardViewModel =
+                ViewModelProviders.of(this).get(DashboardViewModel.class);*/
+        View root = inflater.inflate(R.layout.fragment_dashboard_favorites, container, false);
+        m_MainCatalogListView = root.findViewById(R.id.medicinesListView);
+
+        //logic---------------------
+        m_MedicineAdapter = new FavoritesMedicineListAdapter(this.getContext(), MainActivity.m_FavoritesList);
+
+
+        m_MainCatalogListView.setAdapter(m_MedicineAdapter);
+
+        m_MainCatalogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Toast.makeText(DashboardFragment.this.getContext(), "you clicked favorite item : " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        /*final TextView textView = root.findViewById(R.id.text_dashboard);
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 }

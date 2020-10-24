@@ -10,6 +10,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import mans.fci.myapplication.LogicModels.CountryInfo;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public static CountryInfo[] m_CountriesList;
     public static FormInfo[] m_FormsList;
     public static MedicineInfo[] m_CatalogMedicinesList;
+    public static List<MedicineInfo> m_FavoritesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
             m_CatalogMedicinesList[i].country_id =r.nextInt(4);
             m_CatalogMedicinesList[i].form = new int[]{1,2};
 
+            m_CatalogMedicinesList[i].is_favorite = r.nextBoolean();
+            if(m_CatalogMedicinesList[i].is_favorite)
+            {
+                m_FavoritesList.add(m_CatalogMedicinesList[i]);
+            }
         }
 
         //----------------UI -------------------------
