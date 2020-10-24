@@ -53,11 +53,17 @@ public class MainActivity extends AppCompatActivity {
             m_CatalogMedicinesList[i].title = "title "+i;
             m_CatalogMedicinesList[i].country_id =r.nextInt(4);
             m_CatalogMedicinesList[i].form = new int[]{1,2};
+            m_CatalogMedicinesList[i].compatibility_id =r.nextInt(12);
 
             m_CatalogMedicinesList[i].is_favorite = r.nextBoolean();
             if(m_CatalogMedicinesList[i].is_favorite)
             {
+                //search for any conflict with existing favorites
+                SearchForFavoriteConflict(i);
+
+                //add new favorite
                 m_FavoritesList.add(m_CatalogMedicinesList[i]);
+
             }
         }
 
@@ -72,6 +78,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    private void SearchForFavoriteConflict(int i) {
+        for (MedicineInfo m:m_FavoritesList) {
+            if(m.compatibility_id== m_CatalogMedicinesList[i].compatibility_id)
+            {
+                //both are conflicting
+                m.m_hasConflictWithAnyFavorite = true;
+                m_CatalogMedicinesList[i].m_hasConflictWithAnyFavorite = true;
+            }
+        }
     }
 
 }

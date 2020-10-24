@@ -2,6 +2,7 @@
 package mans.fci.myapplication.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.BaseAdapter;
 
 import android.view.LayoutInflater;
@@ -22,11 +23,13 @@ public class FavoritesMedicineListAdapter extends BaseAdapter {
     Context context;
     List<MedicineInfo>  m_FavoritesMedicine;
     LayoutInflater inflter;
-
+    int m_NormalBackgroundColor, m_ConflictBackgroundColor;
     public FavoritesMedicineListAdapter(Context applicationContext, List<MedicineInfo> FavoriteMedicinesList) {
         this.context = applicationContext;
         this.m_FavoritesMedicine = FavoriteMedicinesList;
         inflter = (LayoutInflater.from(applicationContext));
+        m_NormalBackgroundColor =  this.context .getResources().getColor(R.color.colorAccent);
+        m_ConflictBackgroundColor = this.context .getResources().getColor(R.color.colorConflict);
     }
 
 
@@ -58,7 +61,7 @@ public class FavoritesMedicineListAdapter extends BaseAdapter {
         // get current item to be displayed
         MedicineInfo currentItem = (MedicineInfo) getItem(position);
 
-
+        convertView.setBackgroundColor((currentItem.m_hasConflictWithAnyFavorite)? m_ConflictBackgroundColor: m_NormalBackgroundColor);
         TextView tvTitle =  convertView.findViewById(R.id.textView_medicineTitle);
         TextView tv_Ingredients =  convertView.findViewById(R.id.textView_active_ingredients);
         TextView tv_Producer =  convertView.findViewById(R.id.textView_producer);
