@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import mans.fci.myapplication.LogicModels.MedicineInfo;
 import mans.fci.myapplication.MainActivity;
 import mans.fci.myapplication.MedicineDescriptionActivity;
 import mans.fci.myapplication.R;
@@ -44,7 +45,10 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Toast.makeText(HomeFragment.this.getContext(), "you clicked catalog item : " + position, Toast.LENGTH_SHORT).show();
 
+                //MedicineInfo item = (MedicineInfo) m_MedicineAdapter.getItem(position);
                 Intent MedicineDescriptionActivity = new Intent( getActivity(), mans.fci.myapplication.MedicineDescriptionActivity.class);
+                MedicineDescriptionActivity.putExtra(MainActivity.m_SelectedTabTypeKey, MainActivity.m_TabTypeCatalog);
+                MedicineDescriptionActivity.putExtra(MainActivity.m_UserSelectedMedicineIndexKey, position);
                 startActivity(MedicineDescriptionActivity);
             }
         });

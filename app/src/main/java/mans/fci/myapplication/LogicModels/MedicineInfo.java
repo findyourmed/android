@@ -19,4 +19,7 @@ public class MedicineInfo {
 
     public boolean m_hasConflictWithAnyFavorite;
     public List<MedicineInfo> m_ConflictedFavoriteMedicines = new ArrayList<>();
+
+    public String m_View_Country;
+    public String m_ViewForm;
 }

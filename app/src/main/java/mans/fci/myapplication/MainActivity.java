@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     public static MedicineInfo[] m_CatalogMedicinesList;
     public static List<MedicineInfo> m_FavoritesList = new ArrayList<>();
 
+    public  static final String m_SelectedTabTypeKey="m_SelectedTabTypeKey", m_TabTypeCatalog = "Catalog",m_TabTypeFavorite  = "Favorite";
+    public  static final String m_UserSelectedMedicineIndexKey = "m_UserSelectedMedicineIndexKey";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +54,21 @@ public class MainActivity extends AppCompatActivity {
             m_CatalogMedicinesList[i] = new MedicineInfo();
             m_CatalogMedicinesList[i].Id = i;
             m_CatalogMedicinesList[i].title = "title "+i;
-            m_CatalogMedicinesList[i].country_id =r.nextInt(4);
-            m_CatalogMedicinesList[i].form = new int[]{1,2};
+            m_CatalogMedicinesList[i].country_id =r.nextInt(3)+1;
+            m_CatalogMedicinesList[i].description = "description sample content "+i;
+            m_CatalogMedicinesList[i].form = new int[]{ r.nextInt(3)+1, r.nextInt(3)+1};
+
+            CountryInfo itemCountry =null;
+            for (CountryInfo c: MainActivity.m_CountriesList) {
+                if(c.country_id == m_CatalogMedicinesList[i].country_id)
+                {
+                    itemCountry =c;
+                    break;
+                }
+            }
+            if(itemCountry!=null)
+                m_CatalogMedicinesList[i].m_View_Country = itemCountry.country_title;
+
             m_CatalogMedicinesList[i].compatibility_id =r.nextInt(12);
 
             m_CatalogMedicinesList[i].is_favorite = r.nextBoolean();
@@ -64,6 +80,19 @@ public class MainActivity extends AppCompatActivity {
                 //add new favorite
                 m_FavoritesList.add(m_CatalogMedicinesList[i]);
 
+            }
+
+            m_CatalogMedicinesList[i].m_ViewForm ="";
+            //get forms
+            for(FormInfo f :m_FormsList)
+            {
+               for (int formId: m_CatalogMedicinesList[i].form)
+               {
+                   if(formId == f. m_FormId)
+                   {
+                       m_CatalogMedicinesList[i].m_ViewForm +="- " + f.m_FormName;
+                   }
+               }
             }
         }
 

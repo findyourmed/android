@@ -47,6 +47,10 @@ public class DashboardFragment extends Fragment {
                 Toast.makeText(DashboardFragment.this.getContext(), "you clicked favorite item : " + position, Toast.LENGTH_SHORT).show();
 
                 Intent MedicineDescriptionActivity = new Intent( getActivity(), mans.fci.myapplication.MedicineDescriptionActivity.class);
+                //MedicineInfo item = (MedicineInfo) m_MedicineAdapter.getItem(position);
+                MedicineDescriptionActivity.putExtra(MainActivity.m_SelectedTabTypeKey, MainActivity.m_TabTypeFavorite);
+                MedicineDescriptionActivity.putExtra(MainActivity.m_UserSelectedMedicineIndexKey, position);
+
                 startActivity(MedicineDescriptionActivity);
             }
         });
