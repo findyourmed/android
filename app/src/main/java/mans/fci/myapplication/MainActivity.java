@@ -112,15 +112,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        //search history, based on https://stackoverflow.com/questions/19166537/create-history-to-searchview-on-actionbar
-        Intent intent  = getIntent();
 
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-                    MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
-            suggestions.saveRecentQuery(query, null);
-        }
     }
 
 
