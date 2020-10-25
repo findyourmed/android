@@ -63,4 +63,15 @@ public class DashboardFragment extends Fragment {
         });*/
         return root;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(m_MedicineAdapter!=null)
+        {
+            MainActivity.RefreshFavoritesList();
+            m_MedicineAdapter.notifyDataSetChanged();
+
+        }
+    }
 }

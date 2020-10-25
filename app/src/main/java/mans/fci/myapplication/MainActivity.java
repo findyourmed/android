@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
             m_CatalogMedicinesList[i] = new MedicineInfo();
             m_CatalogMedicinesList[i].Id = i;
             m_CatalogMedicinesList[i].title = "title "+i;
-            m_CatalogMedicinesList[i].country_id =r.nextInt(3)+1;
+            m_CatalogMedicinesList[i].country_id =r.nextInt(4)+1; //TODO:test that
             m_CatalogMedicinesList[i].description = "description sample content "+i;
-            m_CatalogMedicinesList[i].form = new int[]{ r.nextInt(3)+1, r.nextInt(3)+1};
+            m_CatalogMedicinesList[i].form = new int[]{ r.nextInt(4)+1, r.nextInt(4)+1};//TODO:test that
 
             CountryInfo itemCountry =null;
             for (CountryInfo c: MainActivity.m_CountriesList) {
@@ -109,7 +109,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    private void SearchForFavoriteConflict(int i) {
+
+
+    private static void SearchForFavoriteConflict(int i) {
+
         for (MedicineInfo m:m_FavoritesList) {
             if(m.compatibility_id== m_CatalogMedicinesList[i].compatibility_id)
             {
@@ -117,7 +120,31 @@ public class MainActivity extends AppCompatActivity {
                 m.m_hasConflictWithAnyFavorite = true;
                 m_CatalogMedicinesList[i].m_hasConflictWithAnyFavorite = true;
             }
+
         }
     }
 
+    public static void RefreshFavoritesList()
+    {
+        m_FavoritesList.clear();
+        //result conflicts
+        for (MedicineInfo mInitial: m_CatalogMedicinesList ) {
+            mInitial.m_hasConflictWithAnyFavorite=false;
+        }
+        for (int i=0 ; i <m_CatalogMedicinesList.length;i++)
+        {
+
+            if(m_CatalogMedicinesList[i].is_favorite)
+            {
+                //search for any conflict with existing favorites
+                SearchForFavoriteConflict(i);
+
+                //add new favorite
+                m_FavoritesList.add(m_CatalogMedicinesList[i]);
+
+            }
+
+
+        }
+    }
 }

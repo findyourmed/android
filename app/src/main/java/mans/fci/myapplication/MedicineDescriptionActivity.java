@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -44,6 +45,13 @@ public class MedicineDescriptionActivity extends AppCompatActivity {
                 //is favorite
                 ToggleButton toggleIsFavorite = findViewById(R.id.toggleButton_favorite);
                 toggleIsFavorite.setChecked(m_CurrentSelectedMedicine.is_favorite);
+
+                toggleIsFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        m_CurrentSelectedMedicine.is_favorite = isChecked;
+                    }
+                });
 
                 //header title
                 TextView tvHeaderTitle = findViewById(R.id.tv_headerTitle);
@@ -90,4 +98,12 @@ public class MedicineDescriptionActivity extends AppCompatActivity {
     {
         finish();
     }
+
+
+//    @Override
+//    protected void onStop() {
+//        MainActivity.RefreshFavoritesList();
+//        super.onStop();
+//
+//    }
 }
