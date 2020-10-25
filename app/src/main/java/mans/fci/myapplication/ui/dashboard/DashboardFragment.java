@@ -1,5 +1,6 @@
 package mans.fci.myapplication.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import mans.fci.myapplication.MainActivity;
+import mans.fci.myapplication.MedicineDescriptionActivity;
 import mans.fci.myapplication.R;
 import mans.fci.myapplication.ui.FavoritesMedicineListAdapter;
 import mans.fci.myapplication.ui.MedicineHomeCatalogAdapter;
@@ -43,6 +45,9 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Toast.makeText(DashboardFragment.this.getContext(), "you clicked favorite item : " + position, Toast.LENGTH_SHORT).show();
+
+                Intent MedicineDescriptionActivity = new Intent( getActivity(), mans.fci.myapplication.MedicineDescriptionActivity.class);
+                startActivity(MedicineDescriptionActivity);
             }
         });
         /*final TextView textView = root.findViewById(R.id.text_dashboard);

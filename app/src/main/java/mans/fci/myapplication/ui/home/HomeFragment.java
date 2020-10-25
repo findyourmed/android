@@ -1,5 +1,6 @@
 package mans.fci.myapplication.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import mans.fci.myapplication.MainActivity;
+import mans.fci.myapplication.MedicineDescriptionActivity;
 import mans.fci.myapplication.R;
 import mans.fci.myapplication.ui.MedicineHomeCatalogAdapter;
 import mans.fci.myapplication.ui.dashboard.DashboardFragment;
@@ -41,6 +43,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Toast.makeText(HomeFragment.this.getContext(), "you clicked catalog item : " + position, Toast.LENGTH_SHORT).show();
+
+                Intent MedicineDescriptionActivity = new Intent( getActivity(), mans.fci.myapplication.MedicineDescriptionActivity.class);
+                startActivity(MedicineDescriptionActivity);
             }
         });
         /*homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
