@@ -1,6 +1,9 @@
 package mans.fci.myapplication;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,6 +21,7 @@ import java.util.Random;
 import mans.fci.myapplication.LogicModels.CountryInfo;
 import mans.fci.myapplication.LogicModels.FormInfo;
 import mans.fci.myapplication.LogicModels.MedicineInfo;
+import mans.fci.myapplication.util.MySuggestionProvider;
 
 public class MainActivity extends AppCompatActivity {
     public static CountryInfo[] m_CountriesList;
@@ -107,6 +111,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        //search history, based on https://stackoverflow.com/questions/19166537/create-history-to-searchview-on-actionbar
+        Intent intent  = getIntent();
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
+        }
     }
 
 
