@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import mans.fci.myapplication.LogicModels.MedicineInfo;
 import mans.fci.myapplication.MainActivity;
 import mans.fci.myapplication.MedicineDescriptionActivity;
 import mans.fci.myapplication.R;
+import mans.fci.myapplication.ui.CountriesSpinnerAdapter;
 import mans.fci.myapplication.ui.MedicineHomeCatalogAdapter;
 import mans.fci.myapplication.ui.dashboard.DashboardFragment;
 import mans.fci.myapplication.util.ExampleAdapter;
@@ -37,6 +39,9 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     ListView m_MainCatalogListView;
     public MedicineHomeCatalogAdapter m_MedicineAdapter ;
+    String[] countryNames={"All","USA","India","Belarus","Switzerland"};
+    int flags[] = {R.drawable.globe, R.drawable.usa, R.drawable.india, R.drawable.belarus, R.drawable.switzerland};
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -71,6 +76,21 @@ public class HomeFragment extends Fragment {
             }
         });*/
 
+        Spinner spin = (Spinner) root.findViewById(R.id.spinner_countries);
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), countryNames[position], Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        CountriesSpinnerAdapter customAdapter=new CountriesSpinnerAdapter(getContext(),flags,countryNames);
+        spin.setAdapter(customAdapter);
         //search history, based on https://stackoverflow.com/questions/19166537/create-history-to-searchview-on-actionbar
         Intent intent  = getActivity().getIntent();
 
