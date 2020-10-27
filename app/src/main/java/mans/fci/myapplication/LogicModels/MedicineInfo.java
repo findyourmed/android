@@ -23,22 +23,39 @@ public class MedicineInfo {
     public String m_View_Country;
     public String m_ViewForm;
 
-    public MedicineInfo ReadFromCSVParsedLine(String[] lineParts)
+    public void ReadFromCSVParsedLine(String[] lineParts)
     {
-        MedicineInfo New = new MedicineInfo();
-        /*id,
-        country_id,
-        title,
-        desciption,
-        producent ,
-        active_ingredient,
-        form,category_id,
-        compatibility_id,
+
+        /*  id,
+            country_id,
+            title,
+            desciption,
+            producent ,
+            active_ingredient,
+            form,
+            category_id,
+            compatibility_id,
         ingredient_group_id,
         is_favorite
          */
         Id= Integer.parseInt(lineParts[0]);
+        country_id = new int[]{ Integer.parseInt(lineParts[1])};
+        title =  lineParts[2];
+        description = lineParts[3];
+        producent = lineParts[4];
+        active_ingredient = lineParts[5];
+
+        String[] formsParts = lineParts[6].split(",");
+        form = new int[formsParts.length];
+        for (int i =0; i<formsParts.length;i++)
+        {
+            form[i] = Integer.parseInt(formsParts[i].trim());
+        }
+        category_id = Integer.parseInt(lineParts[7]);
+        compatibility_id = Integer.parseInt(lineParts[8]);
+        ingredient_group_id = Integer.parseInt(lineParts[9]);
+        is_favorite = lineParts.length>=11 && lineParts[10].trim()=="1";
         //TODO continue next fields
-        return New;
+
     }
 }

@@ -71,6 +71,8 @@ public class FavoritesMedicineListAdapter extends BaseAdapter {
         //sets the text for item name and item description from the current item object
         tvTitle.setText(currentItem.title);
         CountryInfo itemCountry =null;
+        tv_Ingredients.setText(currentItem.active_ingredient);
+        tv_Producer.setText(currentItem.producent);
         /*for (CountryInfo c:MainActivity.m_CountriesList) {
 
             if(c.country_id == currentItem.country_id)
@@ -79,8 +81,8 @@ public class FavoritesMedicineListAdapter extends BaseAdapter {
                 break;
             }
         }*/
-        if(itemCountry!=null)
-            tv_Producer.setText(currentItem.m_View_Country);
+//        if(itemCountry!=null)
+//            tv_Producer.setText(currentItem.m_View_Country);
 
         // returns the view for the current row
         return convertView;

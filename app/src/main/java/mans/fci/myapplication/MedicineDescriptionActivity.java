@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.List;
+
 import mans.fci.myapplication.LogicModels.CountryInfo;
 import mans.fci.myapplication.LogicModels.FormInfo;
 import mans.fci.myapplication.LogicModels.MedicineInfo;
 
 public class MedicineDescriptionActivity extends AppCompatActivity {
-    MedicineInfo[] SourceData;
+    List<MedicineInfo> SourceData;
     MedicineInfo m_CurrentSelectedMedicine;
     final int m_notFoundIndex = -1;
     @Override
@@ -28,16 +30,15 @@ public class MedicineDescriptionActivity extends AppCompatActivity {
         else
         {
             if(MainActivity.m_FavoritesList.size()>0) {
-                SourceData = new MedicineInfo[MainActivity.m_FavoritesList.size()];
-                MainActivity.m_FavoritesList.toArray(SourceData);
+                SourceData = MainActivity.m_FavoritesList;
             }
         }
 
         int ArrayPosition =getIntent().getIntExtra(MainActivity.m_UserSelectedMedicineIndexKey, m_notFoundIndex);
-        if(SourceData!=null && SourceData.length> ArrayPosition && ArrayPosition!=m_notFoundIndex)
+        if(SourceData!=null && SourceData.size()> ArrayPosition && ArrayPosition!=m_notFoundIndex)
         {
             //get current medicine and display it
-            m_CurrentSelectedMedicine = SourceData[ArrayPosition];
+            m_CurrentSelectedMedicine = SourceData.get(ArrayPosition);
 
             if(m_CurrentSelectedMedicine!=null) {
                 //display UI

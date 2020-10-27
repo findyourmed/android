@@ -20,27 +20,27 @@ import mans.fci.myapplication.R;
 //ref : https://abhiandroid.com/ui/listview , https://guides.codepath.com/android/Using-a-BaseAdapter-with-ListView
 public class MedicineHomeCatalogAdapter extends BaseAdapter {
     Context context;
-    MedicineInfo[] m_MedicinesList;
+    List<MedicineInfo> m_MedicinesList;
     LayoutInflater inflter;
 
-    public MedicineHomeCatalogAdapter( Context applicationContext, MedicineInfo[] MedicinesList) {
+    public MedicineHomeCatalogAdapter( Context applicationContext, List<MedicineInfo> MedicinesList) {
         this.context = applicationContext;
         this.m_MedicinesList = MedicinesList;
         inflter = (LayoutInflater.from(applicationContext));
     }
     @Override
     public int getCount() {
-        return m_MedicinesList.length;
+        return m_MedicinesList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return m_MedicinesList[i];
+        return m_MedicinesList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return m_MedicinesList[i].Id;
+        return m_MedicinesList.get(i).Id;
     }
 
 
@@ -65,6 +65,8 @@ public class MedicineHomeCatalogAdapter extends BaseAdapter {
 
         //sets the text for item name and item description from the current item object
         tvTitle.setText(currentItem.title);
+        tv_Ingredients.setText(currentItem.active_ingredient);
+        tv_Producer.setText(currentItem.producent);
        /* CountryInfo itemCountry =null;
         for (CountryInfo c: MainActivity.m_CountriesList) {
             if(c.country_id == currentItem.country_id)
@@ -73,8 +75,8 @@ public class MedicineHomeCatalogAdapter extends BaseAdapter {
                 break;
             }
         }*/
-        if(currentItem.m_View_Country!=null)
-            tv_Producer.setText(currentItem.m_View_Country);
+//        if(currentItem.m_View_Country!=null)
+//            tv_Producer.setText(currentItem.m_View_Country);
 
         // returns the view for the current row
         return convertView;
