@@ -65,16 +65,16 @@ public class MedicineHomeCatalogAdapter extends BaseAdapter {
 
         //sets the text for item name and item description from the current item object
         tvTitle.setText(currentItem.title);
-        CountryInfo itemCountry =null;
+       /* CountryInfo itemCountry =null;
         for (CountryInfo c: MainActivity.m_CountriesList) {
             if(c.country_id == currentItem.country_id)
             {
                 itemCountry =c;
                 break;
             }
-        }
-        if(itemCountry!=null)
-            tv_Producer.setText(itemCountry.country_title);
+        }*/
+        if(currentItem.m_View_Country!=null)
+            tv_Producer.setText(currentItem.m_View_Country);
 
         // returns the view for the current row
         return convertView;

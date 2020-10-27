@@ -78,7 +78,8 @@ public class MedicineDescriptionActivity extends AppCompatActivity {
                 ImageView[] FormImages = new ImageView[]{findViewById(R.id.imageView_tablet),
                         findViewById(R.id.imageView_pills),
                         findViewById(R.id.imageView_liquid),
-                        findViewById(R.id.imageView_injection)};
+                        findViewById(R.id.imageView_injection),
+                        findViewById(R.id.imageView_gel)};
 
                 //initial visibility
                 for (ImageView f : FormImages) {
