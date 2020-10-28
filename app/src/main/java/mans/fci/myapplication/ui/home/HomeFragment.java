@@ -40,7 +40,11 @@ public class HomeFragment extends Fragment {
     ListView m_MainCatalogListView;
     public MedicineHomeCatalogAdapter m_MedicineAdapter ;
     String[] countryNames={"All","USA","India","Belarus","Switzerland"};
-    int flags[] = {R.drawable.globe, R.drawable.usa, R.drawable.india, R.drawable.belarus, R.drawable.switzerland};
+    int flags[] = {R.drawable.globe,
+            R.drawable.usa,
+            R.drawable.india,
+            R.drawable.belarus,
+            R.drawable.switzerland};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mans.fci.myapplication.LogicModels.CountryInfo;
 import mans.fci.myapplication.LogicModels.FormInfo;
 import mans.fci.myapplication.LogicModels.MedicineInfo;
+import mans.fci.myapplication.ui.MedicineHomeCatalogAdapter;
+import mans.fci.myapplication.ui.SimilarMedicineAdapter;
 
 public class MedicineDescriptionActivity extends AppCompatActivity {
     List<MedicineInfo> SourceData;
@@ -70,9 +74,9 @@ public class MedicineDescriptionActivity extends AppCompatActivity {
                 TextView tvTable_ActiveComponent = findViewById(R.id.tv_table_ActiveComponent);
 
                 tvTableTitle.setText(m_CurrentSelectedMedicine.title);
-                tvTableProducer.setText(m_CurrentSelectedMedicine.m_View_Country);
+                tvTableProducer.setText(m_CurrentSelectedMedicine.producent);
                 tvTable_ActiveComponent.setText(m_CurrentSelectedMedicine.active_ingredient);
-                tvTable_IngredientGroupId.setText("Groupd:" + m_CurrentSelectedMedicine.ingredient_group_id);
+                tvTable_IngredientGroupId.setText("Group:" + m_CurrentSelectedMedicine.ingredient_group_id);
                 tvTable_DosageForm.setText(m_CurrentSelectedMedicine.m_ViewForm);
 
                 //check visible forms
@@ -91,7 +95,18 @@ public class MedicineDescriptionActivity extends AppCompatActivity {
                     FormImages[formId-1].setVisibility(View.VISIBLE);
                 }
 
-                //TODO:Show SImilar Medicines
+                //Show Similar Medicines
+                List<MedicineInfo> SimilarItems = new ArrayList<>();
+                for (MedicineInfo m :MainActivity.m_CatalogMedicinesList)
+                {
+                    if(m.Id!=m_CurrentSelectedMedicine.Id && m.ingredient_group_id == m_CurrentSelectedMedicine.ingredient_group_id)
+                        SimilarItems.add(m);
+                }
+                ListView listViewSimilarCountries = findViewById(R.id.medicinesSimilarListView);
+                SimilarMedicineAdapter similaritesAdapter = new SimilarMedicineAdapter(this,SimilarItems );
+
+
+                listViewSimilarCountries.setAdapter(similaritesAdapter);
             }
         }
 
