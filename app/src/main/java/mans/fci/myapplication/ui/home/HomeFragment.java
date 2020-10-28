@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -105,7 +106,25 @@ public class HomeFragment extends Fragment {
             suggestions.saveRecentQuery(query, null);
         }
 
+        Button saveButton = root.findViewById(R.id.button_SaveData);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnButtonSaveDataClick(v);
+            }
+        });
         return root;
+    }
+
+    public void OnButtonSaveDataClick(View v)
+    {
+        MainActivity containerActivity = (MainActivity) getActivity();
+        if(containerActivity!=null)
+        {
+            containerActivity.SaveCSVFile();
+            Toast.makeText(getContext(),"Data Saved Successfully", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private List<String> items;

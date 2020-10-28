@@ -14,6 +14,7 @@ import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -142,6 +144,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        //SaveCSVFile();
+        super.onDestroy();
+    }
+
+
     //ref: https://stackoverflow.com/a/19218941/1445776
     private void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
@@ -150,6 +159,32 @@ public class MainActivity extends AppCompatActivity {
             out.write(buffer, 0, read);
         }
     }
+
+    public void SaveCSVFile() {
+        File AppDireFile = new File(this.getFilesDir(), m_CSVFileName);
+        OutputStream out = null;
+        //InputStream inputStream= this.getResources().openRawResource(R.raw.medicine_dataset);
+        try {
+            OutputStreamWriter streamWriter = new OutputStreamWriter(new FileOutputStream( AppDireFile));
+            CSVWriter csvWriter = new CSVWriter(streamWriter);
+
+            String [] headers =  new String[]{"id","country_id","title","desciption",
+                    "producent" ,"active_ingredient","form","category_id",
+                    "compatibility_id","ingredient_group_id","is_favorite"};
+            csvWriter.writeNext(headers,false);
+            for (MedicineInfo m: m_CatalogMedicinesList ) {
+                csvWriter.writeNext(m.GenerateCSVLine(),false);
+            }
+
+            csvWriter.close();
+            streamWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //ref: https://stackoverflow.com/questions/43055661/reading-csv-file-in-android-app ,
     //http://zetcode.com/java/opencsv/
     public void ReadCSVData()
@@ -191,6 +226,8 @@ public class MainActivity extends AppCompatActivity {
             nextLine = reader.readNext();//skip first line
             //List<MedicineInfo> tempMedicines = new ArrayList<>();
             m_CatalogMedicinesList.clear();
+            m_FavoritesList.clear();
+
             while ((nextLine = reader.readNext()) != null) {
                 // nextLine[] is an array of values from the line
                 Log.e("MedicineINFO",nextLine[0] + nextLine[1] + "etc...");
