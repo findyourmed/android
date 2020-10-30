@@ -61,6 +61,10 @@ public class MedicineInfo {
 
     }
 
+    public boolean IsMatch(String queryText)
+    {
+        return description.toLowerCase().contains(queryText) || title.toLowerCase().contains(queryText);
+    }
     public String[] GenerateCSVLine()
     {
         String[] lineParts = new String[11];

@@ -7,9 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import mans.fci.myapplication.LogicModels.CountryInfo;
@@ -18,7 +22,7 @@ import mans.fci.myapplication.MainActivity;
 import mans.fci.myapplication.R;
 
 //ref : https://abhiandroid.com/ui/listview , https://guides.codepath.com/android/Using-a-BaseAdapter-with-ListView
-public class MedicineHomeCatalogAdapter extends BaseAdapter {
+public class MedicineHomeCatalogAdapter extends BaseAdapter /*implements Filterable*/ {
     Context context;
     List<MedicineInfo> m_MedicinesList;
     LayoutInflater inflter;
@@ -82,6 +86,53 @@ public class MedicineHomeCatalogAdapter extends BaseAdapter {
         return convertView;
     }
 
-
+//    //https://stackoverflow.com/questions/14365847/how-to-implement-getfilter-with-custom-adapter-that-extends-baseadapter
+//    @Override
+//    public Filter getFilter()
+//    {
+//        return new Filter()
+//        {
+//            List<MedicineInfo> filteredData;
+//            @Override
+//            protected FilterResults performFiltering(CharSequence charSequence)
+//            {
+//                FilterResults results = new FilterResults();
+//
+//                //If there's nothing to filter on, return the original data for your list
+//                if(charSequence == null || charSequence.length() == 0)
+//                {
+//                    results.values = m_MedicinesList;
+//                    results.count = m_MedicinesList.size();
+//                }
+//                else
+//                {
+//                    List<MedicineInfo> filterResultsData = new ArrayList<> ();
+//                    String queryText = charSequence.toString();
+//                    for(MedicineInfo data : m_MedicinesList)
+//                    {
+//                        //In this loop, you'll filter through originalData and compare each item to charSequence.
+//                        //If you find a match, add it to your new ArrayList
+//                        //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
+//                        if(data.IsMatch(queryText))
+//                        {
+//                            filterResultsData.add(data);
+//                        }
+//                    }
+//
+//                    results.values = filterResultsData;
+//                    results.count = filterResultsData.size();
+//                }
+//
+//                return results;
+//            }
+//
+//            @Override
+//            protected void publishResults(CharSequence charSequence, FilterResults filterResults)
+//            {
+//                filteredData = (ArrayList<MedicineInfo>)filterResults.values;
+//                notifyDataSetChanged();
+//            }
+//        };
+//    }
 
 }

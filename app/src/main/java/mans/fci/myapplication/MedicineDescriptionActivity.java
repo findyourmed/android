@@ -30,7 +30,7 @@ public class MedicineDescriptionActivity extends AppCompatActivity {
 
         String SelectedTab = getIntent().getStringExtra(MainActivity.m_SelectedTabTypeKey);
         if(SelectedTab.equals(MainActivity.m_TabTypeCatalog))
-            SourceData = MainActivity.m_CatalogMedicinesList;
+            SourceData = MainActivity.m_CurrentVisibleCatalogListItems;
         else
         {
             if(MainActivity.m_FavoritesList.size()>0) {

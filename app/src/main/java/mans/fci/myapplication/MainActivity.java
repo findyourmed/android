@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public  static final String m_UserSelectedMedicineIndexKey = "m_UserSelectedMedicineIndexKey";
 
     private static final String m_CSVFileName = "medicine_dataset.csv";
+    public static List<MedicineInfo> m_CurrentVisibleCatalogListItems = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
         //forms fixed data
         m_FormsList =  new FormInfo[5];
         m_FormsList[0] = new FormInfo(1,"tablets");
-        m_FormsList[1] = new FormInfo(2,"pills");
+        m_FormsList[1] = new FormInfo(2,"caps");
         m_FormsList[2] = new FormInfo(3,"liquid");
         m_FormsList[3] = new FormInfo(4,"injections");
         m_FormsList[4] = new FormInfo(5,"gel");
 
         //Read Source CSV
         ReadCSVData();
-
+        CloneOriginalDataToVisislbeList();
 //        //demo data (medicines)
 //        Random r = new Random();
 //        m_CatalogMedicinesList = new MedicineInfo[20];
@@ -144,6 +145,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public static void CloneOriginalDataToVisislbeList()
+    {
+        MainActivity.m_CurrentVisibleCatalogListItems.clear();
+        for(MedicineInfo m : MainActivity.m_CatalogMedicinesList) {
+            MainActivity.m_CurrentVisibleCatalogListItems.add(m);
+
+        }
+    }
     @Override
     protected void onDestroy() {
         //SaveCSVFile();
