@@ -14,10 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -62,6 +64,7 @@ public class HomeFragment extends Fragment {
     private SearchView m_SearchView;
     Spinner spin_forms;
     Spinner countrySpinner;
+    ToggleButton m_IngredientSearchModeToggle ;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -71,7 +74,13 @@ public class HomeFragment extends Fragment {
         //----------ui ----------------
         View root = inflater.inflate(R.layout.fragment_home_catalog, container, false);
         m_MainCatalogListView = root.findViewById(R.id.medicinesListView);
-
+        m_IngredientSearchModeToggle = root.findViewById(R.id.toggleButton_ingredientMode);
+        m_IngredientSearchModeToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                RefreshSearchResults();
+            }
+        });
         m_SearchView = root.findViewById(R.id.searchview_text);
         m_SearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -190,33 +199,72 @@ public class HomeFragment extends Fragment {
         RefreshSearchResults();
     }
     private void RefreshSearchResults() {
-       //start with all data
-        MainActivity.CloneOriginalDataToVisislbeList();
-
+        boolean isIngredientSearch = m_IngredientSearchModeToggle.isChecked();
         String query = m_SearchView.getQuery().toString().trim().toLowerCase();
         int formId = spin_forms.getSelectedItemPosition();
         int countrId = countrySpinner.getSelectedItemPosition();
-
-        MedicineInfo temp;
-        for(int i=MainActivity.m_CurrentVisibleCatalogListItems.size()-1; i>=0 ; i--) //backward loop
+        int required_ingredientGroupId = -1;
+        if(isIngredientSearch)
         {
-            temp = MainActivity.m_CurrentVisibleCatalogListItems.get(i);
-            //apply search query
-            if(query.length()>0 && !temp.IsMatch(query))
+            //step 1 -  find exact matching Medicine
+            //MedicineInfo exactMedicine = null;
+            for (MedicineInfo m : MainActivity.m_CatalogMedicinesList)
             {
-                MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
+                if(query.length() > 0 && m.IsMatch(query))
+                {
+                    //exactMedicine = m;
+                    required_ingredientGroupId = m.ingredient_group_id;
+                    break;
+                }
             }
 
-            //apply country id search
-            else if(countrId!=0 && !ArrayUtils.contains( temp.country_id, countrId))
-            {
-                MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
-            }
+            //step2- search for similar group ID
+            //start with all data
+            MainActivity.CloneOriginalDataToVisislbeList();
 
-            //apply form id search
-            else if(formId!=0 && !ArrayUtils.contains( temp.form, formId))
+            MedicineInfo temp;
+            for (int i = MainActivity.m_CurrentVisibleCatalogListItems.size() - 1; i >= 0; i--) //backward loop
             {
-                MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
+                temp = MainActivity.m_CurrentVisibleCatalogListItems.get(i);
+                //apply search query
+                if (required_ingredientGroupId >= -1 && temp.ingredient_group_id != required_ingredientGroupId) {
+                    MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
+                }
+
+                //apply country id search
+                else if (countrId != 0 && !ArrayUtils.contains(temp.country_id, countrId)) {
+                    MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
+                }
+
+                //apply form id search
+                else if (formId != 0 && !ArrayUtils.contains(temp.form, formId)) {
+                    MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
+                }
+            }
+        }
+        else //normal search
+        {
+            //start with all data
+            MainActivity.CloneOriginalDataToVisislbeList();
+
+            MedicineInfo temp;
+            for (int i = MainActivity.m_CurrentVisibleCatalogListItems.size() - 1; i >= 0; i--) //backward loop
+            {
+                temp = MainActivity.m_CurrentVisibleCatalogListItems.get(i);
+                //apply search query
+                if (query.length() > 0 && !temp.IsMatch(query)) {
+                    MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
+                }
+
+                //apply country id search
+                else if (countrId != 0 && !ArrayUtils.contains(temp.country_id, countrId)) {
+                    MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
+                }
+
+                //apply form id search
+                else if (formId != 0 && !ArrayUtils.contains(temp.form, formId)) {
+                    MainActivity.m_CurrentVisibleCatalogListItems.remove(i);
+                }
             }
         }
         //Toast.makeText(this.getContext(),"search called", Toast.LENGTH_SHORT).show();
