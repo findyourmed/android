@@ -59,13 +59,23 @@ public class SimilarMedicineAdapter extends BaseAdapter {
 
 
         TextView tvTitle =  convertView.findViewById(R.id.tv_similar_row_medicineTitle);
-        TextView tv_country = convertView.findViewById(R.id.tv_similar_row_country);
+        //TextView tv_country = convertView.findViewById(R.id.tv_similar_row_country);
+        ImageView imFlag = convertView.findViewById(R.id.imageView_flag);
 
 
+        int flags[] = {
+                R.drawable.switzerland,
+                R.drawable.usa,
+                R.drawable.india,
+                R.drawable.belarus,
+        };
+        int imageIndex = currentItem.country_id[0]-1;
+        if(imageIndex>=0 && imageIndex <flags.length)
+            imFlag.setImageResource(flags[imageIndex]);
 
         //sets the text for item name and item description from the current item object
         tvTitle.setText(currentItem.title);
-        tv_country.setText(currentItem.m_View_Country);
+        //tv_country.setText(currentItem.m_View_Country);
 
         // returns the view for the current row
         return convertView;

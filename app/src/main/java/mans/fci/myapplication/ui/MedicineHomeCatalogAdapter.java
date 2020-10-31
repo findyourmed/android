@@ -64,13 +64,25 @@ public class MedicineHomeCatalogAdapter extends BaseAdapter /*implements Filtera
         TextView tvTitle =  convertView.findViewById(R.id.textView_medicineTitle);
         TextView tv_Ingredients =  convertView.findViewById(R.id.textView_active_ingredients);
         TextView tv_Producer =  convertView.findViewById(R.id.textView_producer);
-
+        ImageView imFlag = convertView.findViewById(R.id.imageView_flag);
 
 
         //sets the text for item name and item description from the current item object
         tvTitle.setText(currentItem.title);
         tv_Ingredients.setText(currentItem.active_ingredient);
         tv_Producer.setText(currentItem.producent);
+
+
+        int flags[] = {
+                R.drawable.switzerland,
+                R.drawable.usa,
+                R.drawable.india,
+                R.drawable.belarus,
+        };
+        int imageIndex = currentItem.country_id[0]-1;
+        if(imageIndex>=0 && imageIndex <flags.length)
+            imFlag.setImageResource(flags[imageIndex]);
+
        /* CountryInfo itemCountry =null;
         for (CountryInfo c: MainActivity.m_CountriesList) {
             if(c.country_id == currentItem.country_id)

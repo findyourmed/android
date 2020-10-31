@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
         //countries fixed data
         m_CountriesList = new CountryInfo[4];
-        m_CountriesList[0] = new CountryInfo(1, "USA");
-        m_CountriesList[1] = new CountryInfo(2, "India");
-        m_CountriesList[2] = new CountryInfo(3, "Belarus");
-        m_CountriesList[3] = new CountryInfo(4, "Switzerland");
+        m_CountriesList[0] = new CountryInfo(1, "Switzerland");
+        m_CountriesList[1] = new CountryInfo(2, "USA");
+        m_CountriesList[2] = new CountryInfo(3, "India");
+        m_CountriesList[3] = new CountryInfo(4, "Belarus");
 
         //forms fixed data
         m_FormsList =  new FormInfo[5];

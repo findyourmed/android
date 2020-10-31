@@ -41,12 +41,13 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     ListView m_MainCatalogListView;
     public MedicineHomeCatalogAdapter m_MedicineAdapter ;
-    String[] countryNames={"All","USA","India","Belarus","Switzerland"};
+    String[] countryNames={"All","Switzerland","USA","India","Belarus"};
     int flags[] = {R.drawable.globe,
+            R.drawable.switzerland,
             R.drawable.usa,
             R.drawable.india,
             R.drawable.belarus,
-            R.drawable.switzerland};
+            };
 
     String[] formNames={"All","Tablets","Caps","Liquid","Injection" , "gel"};
     int formIcons[] = {R.drawable.all_med,

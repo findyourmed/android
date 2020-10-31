@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -73,6 +74,7 @@ public class FavoritesMedicineListAdapter extends BaseAdapter {
         CountryInfo itemCountry =null;
         tv_Ingredients.setText(currentItem.active_ingredient);
         tv_Producer.setText(currentItem.producent);
+        ImageView imFlag = convertView.findViewById(R.id.imageView_flag);
         /*for (CountryInfo c:MainActivity.m_CountriesList) {
 
             if(c.country_id == currentItem.country_id)
@@ -83,6 +85,15 @@ public class FavoritesMedicineListAdapter extends BaseAdapter {
         }*/
 //        if(itemCountry!=null)
 //            tv_Producer.setText(currentItem.m_View_Country);
+        int flags[] = {
+                R.drawable.switzerland,
+                R.drawable.usa,
+                R.drawable.india,
+                R.drawable.belarus,
+        };
+        int imageIndex = currentItem.country_id[0]-1;
+        if(imageIndex>=0 && imageIndex <flags.length)
+            imFlag.setImageResource(flags[imageIndex]);
 
         // returns the view for the current row
         return convertView;
